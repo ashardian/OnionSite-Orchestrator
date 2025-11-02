@@ -238,8 +238,3 @@ See `LICENSE` for more details.
 Built for privacy enthusiasts, researchers, and developers who value secure web hosting over Tor.
 
 ```
-
----
-
-Would you like me to include a **`badges section`** (build passing, Tor version, Debian version tested, etc.) and a **demo screenshot preview** block for your GitHub page? It’ll make the README look more professional and production-ready.
-```
