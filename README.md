@@ -236,5 +236,3 @@ See `LICENSE` for more details.
 
 **OnionSite-Orchestrator** by Ashar Dian
 Built for privacy enthusiasts, researchers, and developers who value secure web hosting over Tor.
-
-```
