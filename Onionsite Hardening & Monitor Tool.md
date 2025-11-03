@@ -1,132 +1,150 @@
-The Onionsite Hardening & Monitor Tool is an automated security enhancer and real-time monitoring companion for your .onion website infrastructure.
-It works seamlessly alongside the Onionsite Orchestrator, providing system hardening, security auditing, backup automation, WAF setup, and live log monitoring for services like Tor and Nginx.
+# 🧅 OnionSite Hardening & Monitoring Tool
 
-This tool ensures that your .onion deployment remains secure, compliant, and resilient against common attack vectors.
+![Python](https://img.shields.io/badge/Python-3.8%2B-blue.svg)
+![License](https://img.shields.io/badge/License-MIT-green.svg)
+![Tor](https://img.shields.io/badge/Tor-Integration-purple.svg)
+![Security](https://img.shields.io/badge/Status-Hardened-success.svg)
 
-🛡️ Features
-Category	Description
-🔍 Security Audit	Automatically checks Tor configuration, Nginx status, firewall setup, Fail2Ban, and system protections.
-🧩 Automatic Hardening	Applies secure configurations to Tor and Nginx, adds restrictive systemd sandboxing, and configures Unattended Upgrades.
-🔐 Key Protection	Backs up and optionally encrypts your Hidden Service private key using GPG.
-🌐 Firewall Setup	Automatically configures UFW to block all inbound except localhost.
-🧱 WAF Integration	Installs and enables ModSecurity2 (Web Application Firewall) for Nginx or Apache.
-📊 Real-Time Monitoring	Tails systemd logs and Nginx access/error logs in real-time, detecting anomalies and failed requests.
-📦 Reporting	Generates detailed JSON security reports containing audit results, actions taken, and vulnerability scans.
-⚙️ Systemd Integration	Installs a persistent monitor service that runs automatically at boot.
-📢 Alerting System	Supports Slack/webhook alerts and email notifications for anomalies or service failures.
-⚡ Quick Start
-1️⃣ Installation
-sudo apt update
-sudo apt install python3 git -y
-git clone https://github.com/<yourusername>/onionsite-hardener.git
+A powerful **automated post-deployment hardening, auditing, and monitoring tool** for `.onion` websites built with the **OnionSite Orchestrator**.  
+It ensures your Tor-based infrastructure remains **secure, private, and resilient** through system checks, encryption enforcement, and live service monitoring.
+
+---
+
+## 🚀 Overview
+
+After your `.onion` website is created with the **OnionSite Orchestrator**, this tool performs deep system-level hardening and real-time monitoring of all related services (Tor, Nginx, and system security components).
+
+It automatically:
+- Enforces secure configurations.
+- Detects misconfigurations.
+- Monitors log activity in real time.
+- Generates audit reports and encrypted backups.
+- Sends optional alerts via email or webhook.
+
+---
+
+## 🧩 Key Features
+
+### 🔐 Security Hardening
+- Auto-audit Tor & Nginx configuration files.
+- Enforce TLS and safe ciphers for hidden services.
+- Secure file permissions and ownership.
+- Optionally encrypt and back up hidden service keys.
+
+### 🕵️ Real-Time Monitoring
+- Live tracking of Tor, Nginx, and systemd status.
+- Alerts for restarts, crashes, or configuration drift.
+- Continuous log capture with timestamps.
+- Optional webhook or email notifications.
+
+### 🧠 Intelligence & Reporting
+- Generates a full JSON or HTML security report.
+- Logs every action and event to `/var/log/onionsite-hardener/`.
+- Backup and restore support with GPG encryption.
+
+### 🧰 System Integration
+- Works seamlessly with OnionSite Orchestrator deployments.
+- Uses `ufw`, `journalctl`, `nikto`, and standard Linux utilities.
+- Compatible with Debian, Ubuntu, Parrot, and Tails systems.
+
+---
+
+## ⚙️ Installation
+
+Clone the repository and install dependencies:
+```bash
+git clone https://github.com/YOUR_USERNAME/onionsite-hardener.git
 cd onionsite-hardener
+sudo chmod +x onionsite_hardening_tool.py
+(Dependencies: python3, tor, nginx, ufw, nikto, gpg)
 
-2️⃣ Run Audit Check
+🧭 Usage
+1️⃣ Check system status
+bash
+Copy code
 sudo python3 onionsite_hardening_tool.py --check
-
-
-This performs a deep security audit of:
-
-Tor configuration (/etc/tor/torrc)
-
-Hidden Service permissions
-
-Nginx listener and security headers
-
-System hardening tools (Fail2Ban, nftables, UFW)
-
-3️⃣ Apply Full Hardening
-sudo python3 onionsite_hardening_tool.py --apply --enable-waf --setup-firewall --backup-key --encrypt-key
-
-
-This:
-
-Backs up all critical configs and keys
-
-Applies Nginx/Tor sandboxing
-
-Enforces secure permissions
-
-Installs ModSecurity WAF
-
-Configures firewall and auto-updates
-
-4️⃣ Generate a Security Report
+2️⃣ Apply hardening and secure Tor key
+bash
+Copy code
+sudo python3 onionsite_hardening_tool.py --apply --backup-key --encrypt-key
+3️⃣ Generate a detailed report
+bash
+Copy code
 sudo python3 onionsite_hardening_tool.py --report
-
-
-Find the report in:
-
-/var/log/onionsite-hardener/report.json
-
-5️⃣ Enable Background Monitoring Service
-sudo python3 onionsite_hardening_tool.py --install-service --webhook https://hooks.slack.com/services/... --admin-email you@example.com
-
-
-This installs a systemd service:
-
-/etc/systemd/system/onionsite-hardener-monitor.service
-
-
-and starts continuous log monitoring for Tor and Nginx.
-
-6️⃣ Run Live Monitor Manually
+4️⃣ Start real-time monitoring
+bash
+Copy code
 sudo python3 onionsite_hardening_tool.py --monitor
+Logs are stored under:
 
+swift
+Copy code
+/var/log/onionsite-hardener/hardener.log
+/var/log/onionsite-hardener/report.json
+🔒 Integration with OnionSite Orchestrator
+This tool is the security and reliability layer for your .onion site.
 
-You’ll see live logs with automatic detection of 4xx/5xx HTTP errors and Tor service issues.
+OnionSite Orchestrator	OnionSite Hardener
+Creates Tor hidden service, Nginx, and website	Secures and monitors all services
+Handles automatic onion setup	Handles continuous protection
+Deploys quickly	Enforces strict, safe configs
+Focused on creation	Focused on defense & uptime
 
-🧩 Integration with Onionsite Orchestrator
-Aspect	Onionsite Orchestrator	Hardening Tool
-Purpose	Deploys and configures .onion websites automatically.	Hardens, secures, and monitors those deployed sites.
-Focus	Automation & setup	Security, resilience, compliance
-Outcome	Running .onion website	Hardened, monitored, and self-healing .onion website
-Security	Basic Tor and Nginx setup	Advanced Nginx/Tor hardening, firewall, WAF, key backup
-Logs & Alerts	Deployment logs	Real-time monitoring, Slack/email alerts
+Together, they form a complete secure lifecycle for .onion infrastructure — from deployment to protection and long-term stability.
 
-Together, they create a full-stack .onion site management suite:
-
-The Orchestrator builds and configures the site.
-
-The Hardener Tool locks it down, audits, and monitors continuously.
-
-📁 File Structure
+🧾 Example Report Snippet
+json
+Copy code
+{
+  "timestamp": "2025-11-03T20:42:11Z",
+  "service_status": {
+    "tor": "active",
+    "nginx": "active"
+  },
+  "vulnerabilities": [],
+  "recommendations": [
+    "Enable ufw logging",
+    "Ensure HiddenServiceDir permissions are 700"
+  ]
+}
+🧰 Directory Structure
+Copy code
 onionsite-hardener/
-├── onionsite_hardening_tool.py       # Main Python executable
-├── README.md                         # Documentation
-├── /var/backups/onionsite-hardener/  # Auto-created backups
-├── /var/log/onionsite-hardener/      # Security reports & logs
-└── /etc/systemd/system/onionsite-hardener-monitor.service
+├── onionsite_hardening_tool.py
+├── README.md
+├── requirements.txt
+└── LICENSE
+📡 Alerting
+You can set up simple webhooks or mail notifications for system anomalies.
 
-📋 Example Use Cases
+Example:
 
-🧱 Hardening an .onion site right after deployment by the Orchestrator
+bash
+Copy code
+sudo python3 onionsite_hardening_tool.py --monitor --alert-webhook "https://yourwebhook.url"
+🧩 Future Enhancements
+Full HTML dashboard (local web UI)
 
-🔎 Generating compliance/security audit reports for internal review
+AI-based log anomaly detection
 
-📡 Setting up continuous service monitoring with Slack/webhook alerts
+Integration with SIEM systems (e.g., Wazuh, OpenSearch)
 
-🔐 Securing Hidden Service keys with encryption and backup
+🤝 Contributing
+Pull requests and suggestions are welcome.
+If you find an issue or want to request a feature, open a GitHub Issue.
 
-⚠️ Requirements
+🧠 Short Note — How It Helps OnionSite Orchestrator
+The OnionSite Orchestrator is your deployment brain — it spins up .onion sites and configures Tor + Nginx.
+The OnionSite Hardening & Monitoring Tool is the defense layer — it makes sure everything stays secure, encrypted, and monitored.
 
-Python 3.6+
+Together they create:
 
-Root privileges (for system modifications)
+A fully automated .onion deployment pipeline.
 
-Linux environment (tested on Debian, Ubuntu, Parrot, Mint)
+Continuous integrity checks and hardened configurations.
 
-Optional: nikto, gpg, curl, ufw, fail2ban
+A self-healing, auditable, and stealth-ready onion infrastructure.
 
-🧩 Recommended Usage Workflow
-# 1. Deploy .onion website
-sudo onionsite-orchestrator --install
-
-# 2. Immediately harden and secure
-sudo python3 onionsite_hardening_tool.py --apply --enable-waf --setup-firewall
-
-# 3. Verify system integrity
-sudo python3 onionsite_hardening_tool.py --check --report
-
-# 4. Enable continuous monitoring
-sudo python3 onionsite_hardening_tool.py --install-service
+💬 Author
+Ashar Dian
+🕸️ Onion Security Automation Developer
