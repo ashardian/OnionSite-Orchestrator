@@ -83,7 +83,8 @@ Copy code
 /var/log/onionsite-hardener/report.json
 🔒 Integration with OnionSite Orchestrator
 This tool is the security and reliability layer for your .onion site.
-
+---
+```
 OnionSite Orchestrator	OnionSite Hardener
 Creates Tor hidden service, Nginx, and website	Secures and monitors all services
 Handles automatic onion setup	Handles continuous protection
