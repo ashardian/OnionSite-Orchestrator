@@ -52,7 +52,7 @@ It provides both **basic deployment** capabilities and **advanced security featu
 
 ```bash
 # Clone the repository
-git clone https://github.com/<your-username>/onionsite-orchestrator.git
+git clone https://github.com/ashardian/Onionsite-Orchestrator.git
 cd OnionSite-Orchestrator-main
 
 # Make scripts executable
